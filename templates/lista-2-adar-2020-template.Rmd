@@ -74,7 +74,7 @@ names(dds)[dds_nums]
 
 - - -
 
-5. Quais códigos para gerar os seguintes dados:
+6. Quais códigos para gerar os seguintes dados:
   a.
   
 ```
@@ -109,7 +109,7 @@ names(dds)[dds_nums]
 
 - - - 
 
-6. Usando o mesmo código para solução em todos os itens abaixo, obtenha as seguintes sequências usando os vetores fornecidos.
+7. Usando o mesmo código para solução em todos os itens abaixo, obtenha as seguintes sequências usando os vetores fornecidos.
 
 ```{r , eval=TRUE,echo=FALSE}
 v3 <- c(11, 0.25, 7, 2)
@@ -148,7 +148,7 @@ integer(0)
 
 - - -
 
-7. Considere os seguintes dados horários de temperatura do ar ($T_{ar}$) registrados em duas estações meteorológicas, entre as 0 e 23 horas de um dado dia.
+8. Considere os seguintes dados horários de temperatura do ar ($T_{ar}$) registrados em duas estações meteorológicas, entre as 0 e 23 horas de um dado dia.
 
 ```{r prep-tar-data}
 tar_est1 <- c(
@@ -163,35 +163,40 @@ tar_est2 <- c(
 )
 ```
 
+
+
 > Dica: Faça um gráfico para visualizar as temperaturas das duas estações. Isso facilitará a solução.
 
-`r paste("  ")`**a.** Determine a média diária da $T_{ar}$ das duas estações arrendondando para uma casa decimal. Salve a média de cada estação nas variáveis `tmed_est1` e `tmed_est2`. 
 
 
-`r paste("  ")`**b**. Utilizando as variáveis do item anterior, verifique usando comparação lógica, em qual estação o ambiente é mais quente?
+  **a.** Determine a média diária da $T_{ar}$ das duas estações arrendondando para uma casa decimal. Salve a média de cada estação nas variáveis `tmed_est1` e `tmed_est2`.
 
 
-`r paste("  ")`**c**. Obtenha a 3ª maior temperatura do dia em cada estação.
+
+  **b**. Utilizando as variáveis do item anterior, verifique usando comparação lógica, em qual estação o ambiente é mais quente?
 
 
-`r paste("  ")`**d**. Calcule a amplitude térmica diária ($ATD = T_{max}-T_{min}$, onde $T_{max}$: temperatura máxima dária e $T_{min}$: temperatura mínima dária) das estações 1 e 2, arrendondando para uma casa decimal. Salve os resultados nas variaveis `atd_est1` e `atd_est2`.
+  **c**. Obtenha a 3ª maior temperatura do dia em cada estação.
 
 
-`r paste("  ")`**e**. Qual o horário de ocorrência das temperaturas máximas e mínimas em cada estação? Salve os resultados nas variáveis `hmax_est{i}` e `hmin_est{i}`, com $i = 1, 2$.
+  **d**. Calcule a amplitude térmica diária ($ATD = T_{max}-T_{min}$, onde $T_{max}$: temperatura máxima dária e $T_{min}$: temperatura mínima dária) das estações 1 e 2, arrendondando para uma casa decimal. Salve os resultados nas variaveis `atd_est1` e `atd_est2`.
 
 
-`r paste("  ")`**f**. Quando `tar_est2` é maior que `tar_est1` qual a maior diferença absoluta de temperatura entre as duas estações?
+  **e**. Qual o horário de ocorrência das temperaturas máximas e mínimas em cada estação? Salve os resultados nas variáveis `hmax_est{i}` e `hmin_est{i}`, com $i = 1, 2$.
 
 
-`r paste("  ")`**g**. Qual a hora correspondende a ocorrência daquela maior diferença absoluta de temperatura obtida no item anterior?
-
-`r paste("  ")`**h**. O horário do pôr do sol pode ser estimado a partir da $T_{ar}$. Para o período após o horário de ocorrência da $T_{max}$ determina-se em qual hora ocorre a maior queda de $T_{ar}$ em relação a hora anterior. Estime o horário do pôr do sol para as duas estações (`hps_est{i}`). 
+  **f**. Quando `tar_est2` é maior que `tar_est1` qual a maior diferença absoluta de temperatura entre as duas estações?
 
 
-`r paste("  ")`**i**. Em quais horas as temperaturas das duas estações estão mais próximas uma da outra, ou seja com menos de 0,5°C de diferença ?
+  **g**. Qual a hora correspondende a ocorrência daquela maior diferença absoluta de temperatura obtida no item anterior?
+
+  **h**. O horário do pôr do sol pode ser estimado a partir da $T_{ar}$. Para o período após o horário de ocorrência da $T_{max}$ determina-se em qual hora ocorre a maior queda de $T_{ar}$ em relação a hora anterior. Estime o horário do pôr do sol para as duas estações (`hps_est{i}`). 
 
 
-`r paste("  ")`**j**. Calcule a temperatura média diária usando os seguintes métodos para estação 2.
+  **i**. Em quais horas as temperaturas das duas estações estão mais próximas uma da outra, ou seja com menos de 0,5°C de diferença ?
+
+
+  **j**. Calcule a temperatura média diária usando os seguintes métodos para estação 2.
 
 $T_{med_{1}} = (T_{max} + T_{min})/2$, salvando em uma variável `tar_met1`.
 
@@ -207,7 +212,7 @@ Compare este resultados com aqueles obtidos no item **a**. Qual é melhor?
 
 - - - 
 
-8. Calcule a temperatura do ar horária usando o **modelo de onda** para representação do ciclo diário da temperatura do ar, descrito pelas seguintes equações:
+9. Calcule a temperatura do ar horária usando o **modelo de onda** para representação do ciclo diário da temperatura do ar, descrito pelas seguintes equações:
 
 $$\left\{\begin{matrix}
 h_{T_{min}}\leq h < h_{T_{max}}, & T_{calc} =  \bar{T} - A \, cos\left ( arg \right )\\ 
