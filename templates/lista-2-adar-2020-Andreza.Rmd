@@ -1,6 +1,6 @@
 ---
 title: "Lista de Exercícios 2 - ADAR/UFSM"
-author: "Seu nome aqui"
+author: "Andreza Dantas dos Santos"
 date: '`r Sys.Date()`'
 output: 
   html_document:
@@ -19,17 +19,34 @@ library(tidyverse)
 
 
 1. Crie um vetor com os valores de $e^{x}cos{x}$ para os valores de $x = (3, 3.1, 3.2, ..., 6$).
+```{r}
+x <- c(seq(from = 3, to = 6, by = 0.1))
 
+(vetor_func_q1 <- exp(x)*cos(x))
+```
 
 - - - 
-
 
 2. Crie os seguintes vetores.
    a. $(0.1^{3}\times0.2^{1}, 0.1^{6}\times0.2^{4}, ..., 0.1^{36}\times0.2^{34})$  
     
    b. $(2, \frac{2^{2}}{2}, \frac{2^{3}}{3}, ..., \frac{2^{25}}{25})$  
     
+a)
+```{r}
+a1 <- seq(3, len = 12, by = 3)
+a2 <- seq(1, len = 12, by = 3)
 
+(vetor_func_q2a <- c(rep((0.1^a1 * 0.2^a2), len = 12)))
+
+```
+
+b)
+```{r}
+a3 <- 2:25
+
+(vetor_func_q2b <- c(2, rep((2^a1 / a1), len = 24)))
+```
 - - -
 
 3. Reproduza a criação do vetor dias da semana (`dds`) mostrado abaixo.
@@ -38,6 +55,13 @@ library(tidyverse)
 domingo segunda   terca  quarta  quinta   sexta   sabado
       1       2       3       4       5       6        7
 ```
+
+```{r}
+(dds <- c(domingo = 1, segunda = 2, terça = 3, quarta = 4, quinta = 5, sexta = 6, sábado = 7))
+
+```
+
+- - -
 
 4. Interprete o resultado da seguinte operação:
 
@@ -50,7 +74,9 @@ dds_nums <- c(
 names(dds)[dds_nums]
 ```
 
+`dds_nums` retorna um vetor do tipo `inteiro`, devido ao uso do sufixo `L` em cada elemento do vetor numérico.
 
+`names(dds)[dds_nums]` retorna o nome de cada elemento do vetor numérico/inteiro.
 
 - - -
 
@@ -71,6 +97,43 @@ names(dds)[dds_nums]
 `r paste("    ")`c. Usando o código para verificar se o ano é bissexto, gere um vetor nomeado `ndias` com o número de dias do ano para os anos do item (a).
 
 `r paste("    ")`d. Programe como obter o total de anos com 366 dias?
+
+a.
+```{r}
+set.seed(3)
+(anos <- c(sample(1890:2015, 10), 2100, 2300))
+(div_anos_4 <- c(anos %% 4))
+(div_anos_100 <- anos %% 100)
+(div_anos_400 <- anos %% 400)
+bissextos <- ifelse(
+  test = (div_anos_400 == 0) | (div_anos_4 == 0) & (div_anos_100 > 0),
+  yes = 1,
+  no = 0
+)
+(as.logical(bissextos))
+```
+
+b.
+```{r}
+(quais_bissextos <- which(bissextos == 1))
+anos[bissextos]
+```
+
+c.
+```{r}
+ndias <- ifelse(
+  test = (div_anos_400 == 0) | (div_anos_4 == 0) & (div_anos_100 > 0),
+  yes = 366,
+  no = 365
+)
+names(ndias) <- anos
+ndias
+```
+
+d.
+```{r}
+sum(bissextos)
+```
 
 - - -
 
@@ -105,6 +168,30 @@ names(dds)[dds_nums]
 
 ```
 [1] 5 5 5 5 5 4 4 4 4 3 3 3 2 2 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5
+```
+a.
+```{r}
+c(-30, seq(0, 20, by = 5), 30)
+```
+
+b.
+```{r}
+seq(1, 0, by = -0.2)
+```
+
+c.
+```{r}
+seq(-pi, pi, len = 10)
+```
+
+d.
+```{r}
+rep(-1:5, times = 2:8)
+```
+
+e.
+```{r}
+rep(c(5, 4, 3, 2, 1, 2, 3, 4, 5), c(5, 4, 3, 2, 1, 2, 3, 4, 4))
 ```
 
 - - - 
@@ -144,6 +231,18 @@ v0 <- c()
 
 ```
 integer(0)
+```
+
+```{r}
+v3 <- c(11, 0.25, 7, 2)
+v2 <- c(11, 0.25)
+v1 <- c(11)
+v0 <- c()
+
+seq(along = v3)
+seq(along = v2)
+seq(along = v1)
+seq(along = v0)
 ```
 
 - - -
@@ -210,6 +309,103 @@ $T_{med_{3}} = (T_{7} + T_{14} + 2T_{21})/4$, salvando em uma variável `tar_met
 
 Compare este resultados com aqueles obtidos no item **a**. Qual é melhor?
 
+```{r}
+tar_est1
+tar_est2
+Hora <- 0:23
+
+
+dados <- data.frame(Tempo = Hora,
+                    Estação_1 = tar_est1,
+                    Estação_2 = tar_est2)
+library(tidyr)
+dados_long <- dados %>% gather(Estacao, Temperatura_do_ar, -Tempo)
+
+ggplot(data = dados_long, aes(x = Tempo, y = Temperatura_do_ar, group = Estacao)) +
+  geom_line(aes(colour = Estacao)) + 
+  scale_x_continuous(breaks = Hora)
+```
+
+a.
+```{r}
+options(digits = 3)
+tmed_est1 <- mean(tar_est1)
+tmed_est2 <- mean(tar_est2)
+tmed_estcoes <- c(tmed_est1, tmed_est2)
+estacoes <- c("Estação_1", "Estação_2")
+names(tmed_estcoes) <- estacoes
+tmed_estcoes
+```
+
+b.
+```{r}
+if (tmed_est1 - tmed_est2 == 0)
+  {print("tmed_est1 == tmed_est2")}
+
+if(tmed_est1 - tmed_est2 > 0)
+  {print("tmed_est1")} else {
+      print("tmed_est2")
+    }
+```
+
+c.
+```{r}
+tar_est1[order(tar_est1, decreasing = TRUE)][3]
+
+tar_est2[order(tar_est2, decreasing = TRUE)][3]
+```
+
+d.
+```{r}
+(atd_est1 <- max(tar_est1) - min(tar_est1))
+(atd_est2 <- max(tar_est2) - min(tar_est2))
+```
+
+e.
+```{r}
+(hmax_est1 <- c(Hora[which(tar_est1 == max(tar_est1))]))
+(hmax_est2 <- c(Hora[which(tar_est2 == max(tar_est2))]))
+
+(hmin_est1 <- c(Hora[which(tar_est1 == min(tar_est1))])) 
+(hmin_est2 <- c(Hora[which(tar_est2 == min(tar_est2))]))
+```
+
+f.
+```{r}
+difh_tar <- c(tar_est2 - tar_est1)
+difh_tar[which.max(difh_tar)]
+```
+
+g.
+```{r}
+(h_difh_tar <- c(Hora[which.max(difh_tar)]))
+```
+
+h.
+```{r}
+(difh_tar1 <- c(diff(tar_est1)))
+(h_ps_tar1 <- c(which.min(difh_tar1)))
+
+(difh_tar2 <- c(diff(tar_est2)))
+(h_ps_tar2 <- c(which.min(difh_tar2)))
+```
+
+i.
+```{r}
+(temp_prox <- c(Hora[which((tar_est1 - tar_est2) < 0.5)]))
+```
+
+j.
+```{r}
+(tar_met1 <- (max(tar_est2) + min(tar_est2)) / 2)
+
+(tar_met2 <- (max(tar_est2) + min(tar_est2) + (tar_est2[10]) + (2 * (tar_est2[22]))) / 5)
+
+(tar_met2 <- ((tar_est2[8]) + (tar_est2[15]) + (2 * (tar_est2[22]))) / 4)
+```
+
+Por padrão, a equação `tar_met2` estima melhor os valores médios diários. Mas o valor da média calculada com a função `mean` é um valor aproximado ao da equação padrão `tar_met2`, o que, também, nos dá uma boa aproximação.
+
 - - - 
 
 9. Calcule a temperatura do ar horária usando o **modelo de onda** para representação do ciclo diário da temperatura do ar, descrito pelas seguintes equações:
@@ -231,7 +427,7 @@ $$A =\left ( \frac{T_{max}-T_{min}}{2} \right ) $$
 
 $$\left\{\begin{matrix}
 h <  h_{T_{min}}, & arg = \pi  \left ( \frac{h+10}{10+h_{Tmin}} \right )\\ 
-h_{T_{min}}\leq h < h_{T_{max}}, & arg = \pi  \left ( \frac{h-h_{T_{min}}}{14-h_{T_{min}}} \right )\\ 
+h_{T_{min}}\leq h < h_{T_{max}}, & arg = \pi  \left ( \frac{h-h_{T_{min}}}{14-h_{T_{min}}} \`right )\\ 
 h > h_{T_{max}},  & arg = \pi\left ( \frac{14-h}{10+h_{Tmin}} \right )
 \end{matrix}\right. $$
 
@@ -243,5 +439,86 @@ h > h_{T_{max}},  & arg = \pi\left ( \frac{14-h}{10+h_{Tmin}} \right )
 `r paste("  ")`**c**. Calcule a correlação ($r$) nos dois casos. A barra representa a média aritmética.
 
 $$r = \frac{\sum_{i=1}^{n} (T_{obs}-\bar{T}_{obs})(T_{calc}-\bar{T}_{calc}))}{\sqrt{\sum_{i = 1}^{n} (T_{obs}-\bar{T}_{obs})^{2}(T_{calc}-\bar{T}_{calc})^{2})}}$$
+a.
+```{r}
+options(digits = 3)
+Tmed_est1 <- (max(tar_est1) + min(tar_est1)) / 2
+A1 <- (max(tar_est1) - min(tar_est1)) / 2
+
+arg1 <- ifelse(
+  test = (Hora < hmin_est1),
+  yes = arg1 <- pi * ((Hora + 10) / (10 + hmin_est1)),
+  no = NA
+)
+
+arg2 <- ifelse(
+  test = (hmin_est1 <= Hora & Hora < hmax_est1),
+  yes = arg2 <- pi * ((Hora - hmin_est1) / (14 - hmin_est1)),
+  no = NA
+)
+
+arg3 <- ifelse(
+  test = (Hora > hmax_est1),
+  yes = arg3 <- pi * ((14 - Hora) / (10 + hmin_est1)),
+  no = NA
+)
+
+faltante1 <- which(is.na(arg1))
+faltante2 <- which(is.na(arg2))
+faltante3 <- which(is.na(arg3))
+
+(arg_est1 <- c(arg1[-faltante1], arg2[-faltante2], arg3[-faltante3]))
+
+(Tcalc_est1 <- ifelse(
+  test =  (hmin_est1 <= Hora & Hora < hmax_est1),
+  yes = Tcalc_est1 <- Tmed_est1 - A1 * cos(arg_est1),
+  no = Tcalc_est1 <- Tmed_est1 + A1 * cos(arg_est1)
+))
 
 
+Tmed_est2 <- (max(tar_est2) + min(tar_est2)) / 2
+A2 <- (max(tar_est2) - min(tar_est2)) / 2
+
+arg1 <- ifelse(
+  test = (Hora < hmin_est2),
+  yes = arg1 <- pi * ((Hora + 10) / (10 + hmin_est2)),
+  no = NA
+)
+
+arg2 <- ifelse(
+  test = (hmin_est2 <= Hora & Hora < hmax_est2),
+  yes = arg2 <- pi * ((Hora - hmin_est2) / (14 - hmin_est2)),
+  no = NA
+)
+
+arg3 <- ifelse(
+  test = (Hora > hmax_est2),
+  yes = arg3 <- pi * ((14 - Hora) / (10 + hmin_est2)),
+  no = NA
+)
+
+faltante1 <- which(is.na(arg1))
+faltante2 <- which(is.na(arg2))
+faltante3 <- which(is.na(arg3))
+
+(arg_est2 <- c(arg1[-faltante1], arg2[-faltante2], arg3[-faltante3]))
+
+(Tcalc_est2 <- ifelse(
+  test =  (hmin_est2 <= Hora & Hora < hmax_est2),
+  yes = Tcalc_est2 <- Tmed_est2 - A2 * cos(arg_est2),
+  no = Tcalc_est2 <- Tmed_est2 + A2 * cos(arg_est2)
+))
+```
+
+b.
+```{r}
+(RMSE1 <- sqrt(mean((Tcalc_est1 - tar_est1)^2)))
+(RMSE2 <- sqrt(mean((Tcalc_est2 - tar_est2)^2)))
+```
+
+c.
+```{r}
+(r1 <- (mean((tar_est1 - mean(tar_est1)) * (Tcalc_est1 - mean(Tcalc_est1)))) / sqrt(mean((tar_est1 - mean(tar_est1)^2) * (Tcalc_est1 - mean(Tcalc_est1)^2))))
+
+(r2 <- (mean((tar_est2 - mean(tar_est2)) * (Tcalc_est2 - mean(Tcalc_est2)))) / sqrt(mean((tar_est2 - mean(tar_est2)^2) * (Tcalc_est2 - mean(Tcalc_est2)^2))))
+```
