@@ -22,7 +22,7 @@ library(tidyverse)
 ```{r}
 x <- c(seq(from = 3, to = 6, by = 0.1))
 
-(vetor_func_q1 <- exp(x)*cos(x))
+(y <- exp(x)*cos(x))
 ```
 
 - - - 
@@ -32,21 +32,16 @@ x <- c(seq(from = 3, to = 6, by = 0.1))
     
    b. $(2, \frac{2^{2}}{2}, \frac{2^{3}}{3}, ..., \frac{2^{25}}{25})$  
     
-a)
 ```{r}
 a1 <- seq(3, len = 12, by = 3)
 a2 <- seq(1, len = 12, by = 3)
+a3 <- 1:25
 
-(vetor_func_q2a <- c(rep((0.1^a1 * 0.2^a2), len = 12)))
+(q_2a <- c(rep((0.1^a1 * 0.2^a2), len = 12)))
 
+(q_2b <- rep((2^a3 / a3), len = 24))
 ```
 
-b)
-```{r}
-a3 <- 2:25
-
-(vetor_func_q2b <- c(2, rep((2^a1 / a1), len = 24)))
-```
 - - -
 
 3. Reproduza a criação do vetor dias da semana (`dds`) mostrado abaixo.
@@ -57,7 +52,7 @@ domingo segunda   terca  quarta  quinta   sexta   sabado
 ```
 
 ```{r}
-(dds <- c(domingo = 1, segunda = 2, terça = 3, quarta = 4, quinta = 5, sexta = 6, sábado = 7))
+(dds <- c(domingo = 1, segunda = 2, terca = 3, quarta = 4, quinta = 5, sexta = 6, sabado = 7))
 
 ```
 
@@ -74,9 +69,9 @@ dds_nums <- c(
 names(dds)[dds_nums]
 ```
 
-`dds_nums` retorna um vetor do tipo `inteiro`, devido ao uso do sufixo `L` em cada elemento do vetor numérico.
+Ao utilizar o sufixo `L` em um dado numérico `(numeric)`, o tipo de dado é definido como inteiro `(integer)`. Assim, em `dds_nums`, o vetor foi definido como `integer`, devido ao uso do `L` em cada elemento numérico. 
 
-`names(dds)[dds_nums]` retorna o nome de cada elemento do vetor numérico/inteiro.
+`names(dds)[dds_nums]` retorna os "nomes" definidos em `dds` para o vetor `dds_nums`, que compartilha os elementos de `dds`.
 
 - - -
 
@@ -102,27 +97,27 @@ a.
 ```{r}
 set.seed(3)
 (anos <- c(sample(1890:2015, 10), 2100, 2300))
-(div_anos_4 <- c(anos %% 4))
-(div_anos_100 <- anos %% 100)
-(div_anos_400 <- anos %% 400)
+(condicao_1 <- c(anos %% 4))
+(condicao_2 <- anos %% 100)
+(condicao_3 <- anos %% 400)
 bissextos <- ifelse(
-  test = (div_anos_400 == 0) | (div_anos_4 == 0) & (div_anos_100 > 0),
-  yes = 1,
-  no = 0
+  test = (condicao_1 == 0) & (condicao_2 != 0) | (condicao_3 == 0),
+  yes = "sim",
+  no = "não"
 )
-(as.logical(bissextos))
+bissextos
 ```
 
 b.
 ```{r}
-(quais_bissextos <- which(bissextos == 1))
-anos[bissextos]
+(posicao_bissextos <- which(bissextos == "sim"))
+anos[posicao_bissextos]
 ```
 
 c.
 ```{r}
 ndias <- ifelse(
-  test = (div_anos_400 == 0) | (div_anos_4 == 0) & (div_anos_100 > 0),
+  test = (condicao_1 == 0) & (condicao_2 != 0) | (condicao_3 == 0),
   yes = 366,
   no = 365
 )
@@ -132,7 +127,12 @@ ndias
 
 d.
 ```{r}
-sum(bissextos)
+total_bissextos <- ifelse(
+  test = ndias == 366,
+  yes = 1,
+  no = 0
+)
+sum(total_bissextos)
 ```
 
 - - -
@@ -191,7 +191,7 @@ rep(-1:5, times = 2:8)
 
 e.
 ```{r}
-rep(c(5, 4, 3, 2, 1, 2, 3, 4, 5), c(5, 4, 3, 2, 1, 2, 3, 4, 4))
+rep(c(5, 4, 3, 2, 1, 2, 3, 4, 5), c(5, 4, 3, 2, 1, 2, 3, 4, 5))
 ```
 
 - - - 
@@ -235,14 +235,14 @@ integer(0)
 
 ```{r}
 v3 <- c(11, 0.25, 7, 2)
-v2 <- c(11, 0.25)
-v1 <- c(11)
+v2 <- v3[1:2]
+v1 <- v3[1]
 v0 <- c()
 
 seq(along = v3)
 seq(along = v2)
 seq(along = v1)
-seq(along = v0)
+seq_along(v0)
 ```
 
 - - -
@@ -289,7 +289,7 @@ tar_est2 <- c(
 
   **g**. Qual a hora correspondende a ocorrência daquela maior diferença absoluta de temperatura obtida no item anterior?
 
-  **h**. O horário do pôr do sol pode ser estimado a partir da $T_{ar}$. Para o período após o horário de ocorrência da $T_{max}$ determina-se em qual hora ocorre a maior queda de $T_{ar}$ em relação a hora anterior. Estime o horário do pôr do sol para as duas estações (`hps_est{i}`). 
+  **h**. O horário do pôr do sol pode ser estimado a partir da $T_{ar}$. Para o período após o horário de ocorrência da $T_{max}$ determina-se em qual horas ocorre a maior queda de $T_{ar}$ em relação a horas anterior. Estime o horário do pôr do sol para as duas estações (`hps_est{i}`). 
 
 
   **i**. Em quais horas as temperaturas das duas estações estão mais próximas uma da outra, ou seja com menos de 0,5°C de diferença ?
@@ -310,37 +310,44 @@ $T_{med_{3}} = (T_{7} + T_{14} + 2T_{21})/4$, salvando em uma variável `tar_met
 Compare este resultados com aqueles obtidos no item **a**. Qual é melhor?
 
 ```{r}
-tar_est1
-tar_est2
-Hora <- 0:23
+horas <- 0:23
+names(tar_est1) <- horas
+names(tar_est2) <- horas
+plot(tar_est1,
+     type = "l",
+     lwd = 2,
+     col = 2,
+     # main = "",
+     xlab = "horas (UTC)",
+     ylab = "Temperatura do ar  (graus)",
+     yaxt = "n",
+     ylim = c(min(tar_est2), max(tar_est2))
+)
+points(tar_est2, type = "l", col = 4)
+legend("topleft", 
+  legend = c("tar_est1", "tar_est2"), 
+  col = c(2, 4), 
+  lwd = 2, 
+  bty = "n")
+grid(nx = 24)
+box(lwd = 2)
+axis(side = 2, las = 1)
 
-
-dados <- data.frame(Tempo = Hora,
-                    Estação_1 = tar_est1,
-                    Estação_2 = tar_est2)
-library(tidyr)
-dados_long <- dados %>% gather(Estacao, Temperatura_do_ar, -Tempo)
-
-ggplot(data = dados_long, aes(x = Tempo, y = Temperatura_do_ar, group = Estacao)) +
-  geom_line(aes(colour = Estacao)) + 
-  scale_x_continuous(breaks = Hora)
 ```
 
 a.
 ```{r}
-options(digits = 3)
 tmed_est1 <- mean(tar_est1)
 tmed_est2 <- mean(tar_est2)
-tmed_estcoes <- c(tmed_est1, tmed_est2)
-estacoes <- c("Estação_1", "Estação_2")
-names(tmed_estcoes) <- estacoes
-tmed_estcoes
+
+(tmed_est1 <- round(tmed_est1, 1))
+(tmed_est2 <- round(tmed_est2, 1))
 ```
 
 b.
 ```{r}
 if (tmed_est1 - tmed_est2 == 0)
-  {print("tmed_est1 == tmed_est2")}
+  {print("tmed_est1 = tmed_est2")}
 
 if(tmed_est1 - tmed_est2 > 0)
   {print("tmed_est1")} else {
@@ -351,57 +358,60 @@ if(tmed_est1 - tmed_est2 > 0)
 c.
 ```{r}
 tar_est1[order(tar_est1, decreasing = TRUE)][3]
-
 tar_est2[order(tar_est2, decreasing = TRUE)][3]
 ```
 
 d.
 ```{r}
-(atd_est1 <- max(tar_est1) - min(tar_est1))
-(atd_est2 <- max(tar_est2) - min(tar_est2))
+atd_est1 <- max(tar_est1) - min(tar_est1)
+(atd_est1 = round(atd_est1, 1))
+atd_est2 <- max(tar_est2) - min(tar_est2)
+(atd_est2 = round(atd_est2, 1))
 ```
 
 e.
 ```{r}
-(hmax_est1 <- c(Hora[which(tar_est1 == max(tar_est1))]))
-(hmax_est2 <- c(Hora[which(tar_est2 == max(tar_est2))]))
+(hmax_est1 <- c(horas[which(tar_est1 == max(tar_est1))]))
+(hmax_est2 <- c(horas[which(tar_est2 == max(tar_est2))]))
 
-(hmin_est1 <- c(Hora[which(tar_est1 == min(tar_est1))])) 
-(hmin_est2 <- c(Hora[which(tar_est2 == min(tar_est2))]))
+(hmin_est1 <- c(horas[which(tar_est1 == min(tar_est1))])) 
+(hmin_est2 <- c(horas[which(tar_est2 == min(tar_est2))]))
 ```
 
 f.
 ```{r}
-difh_tar <- c(tar_est2 - tar_est1)
-difh_tar[which.max(difh_tar)]
+dif_tar <- abs(tar_est2 - tar_est1)
+dif_tar[which.max(dif_tar)]
 ```
 
 g.
 ```{r}
-(h_difh_tar <- c(Hora[which.max(difh_tar)]))
+(h_dif_tar <- c(horas[which.max(dif_tar)]))
 ```
 
 h.
 ```{r}
-(difh_tar1 <- c(diff(tar_est1)))
-(h_ps_tar1 <- c(which.min(difh_tar1)))
+hps_tar1 <- tar_est1[horas > hmax_est1]
+hps_est1 <- diff(hps_tar1)
+(hps_est1 <- names(which.min(hps_est1)))
 
-(difh_tar2 <- c(diff(tar_est2)))
-(h_ps_tar2 <- c(which.min(difh_tar2)))
+hps_tar2 <- tar_est2[horas > hmax_est2]
+hps_est2 <- diff(hps_tar2)
+(hps_est2 <- names(which.min(hps_est2)))
 ```
 
 i.
 ```{r}
-(temp_prox <- c(Hora[which((tar_est1 - tar_est2) < 0.5)]))
+(temps_prox <- c(horas[which(abs(tar_est1 - tar_est2) < 0.5)]))
 ```
 
 j.
 ```{r}
 (tar_met1 <- (max(tar_est2) + min(tar_est2)) / 2)
 
-(tar_met2 <- (max(tar_est2) + min(tar_est2) + (tar_est2[10]) + (2 * (tar_est2[22]))) / 5)
+(tar_met2 <- (max(tar_est2) + min(tar_est2) + (tar_est2[10]) + (2 * tar_est2[22])) / 5)
 
-(tar_met2 <- ((tar_est2[8]) + (tar_est2[15]) + (2 * (tar_est2[22]))) / 4)
+(tar_met3 <- (tar_est2[8] + tar_est2[15] + (2 * tar_est2[22])) / 4)
 ```
 
 Por padrão, a equação `tar_met2` estima melhor os valores médios diários. Mas o valor da média calculada com a função `mean` é um valor aproximado ao da equação padrão `tar_met2`, o que, também, nos dá uma boa aproximação.
@@ -442,83 +452,52 @@ $$r = \frac{\sum_{i=1}^{n} (T_{obs}-\bar{T}_{obs})(T_{calc}-\bar{T}_{calc}))}{\s
 a.
 ```{r}
 options(digits = 3)
-Tmed_est1 <- (max(tar_est1) + min(tar_est1)) / 2
+tmed_est1 <- (max(tar_est1) + min(tar_est1)) / 2
 A1 <- (max(tar_est1) - min(tar_est1)) / 2
 
-arg1 <- ifelse(
-  test = (Hora < hmin_est1),
-  yes = arg1 <- pi * ((Hora + 10) / (10 + hmin_est1)),
-  no = NA
-)
+arg_est1_c1 <- ifelse(test = (horas < hmin_est1),
+              yes = arg_est1_c1 <- pi * ((horas + 10) / (10 + hmin_est1)),
+              no = 0
+); arg_est1_c2 <- ifelse(test = (hmin_est1 <= horas & horas < hmax_est1),
+                  yes = arg_est1_c2 <- pi * ((horas - hmin_est1) / (14 - hmin_est1)),
+                  no = arg_est1_c1
+); arg_est1 <- ifelse(test = (horas > hmax_est1),
+                  yes = arg_est1 <- pi * ((14 - horas) / (10 + hmin_est1)),
+                  no = arg_est1_c2)
 
-arg2 <- ifelse(
-  test = (hmin_est1 <= Hora & Hora < hmax_est1),
-  yes = arg2 <- pi * ((Hora - hmin_est1) / (14 - hmin_est1)),
-  no = NA
-)
-
-arg3 <- ifelse(
-  test = (Hora > hmax_est1),
-  yes = arg3 <- pi * ((14 - Hora) / (10 + hmin_est1)),
-  no = NA
-)
-
-faltante1 <- which(is.na(arg1))
-faltante2 <- which(is.na(arg2))
-faltante3 <- which(is.na(arg3))
-
-(arg_est1 <- c(arg1[-faltante1], arg2[-faltante2], arg3[-faltante3]))
-
-(Tcalc_est1 <- ifelse(
-  test =  (hmin_est1 <= Hora & Hora < hmax_est1),
-  yes = Tcalc_est1 <- Tmed_est1 - A1 * cos(arg_est1),
-  no = Tcalc_est1 <- Tmed_est1 + A1 * cos(arg_est1)
+(tcalc_est1 <- ifelse(test =  (hmin_est1 <= horas & horas < hmax_est1),
+                      yes = tcalc_est1 <- tmed_est1 - A1 * cos(arg_est1),
+                      no = tcalc_est1 <- tmed_est1 + A1 * cos(arg_est1)
 ))
 
-
-Tmed_est2 <- (max(tar_est2) + min(tar_est2)) / 2
+tmed_est2 <- (max(tar_est2) + min(tar_est2)) / 2
 A2 <- (max(tar_est2) - min(tar_est2)) / 2
 
-arg1 <- ifelse(
-  test = (Hora < hmin_est2),
-  yes = arg1 <- pi * ((Hora + 10) / (10 + hmin_est2)),
-  no = NA
-)
+arg_est2_c1 <- ifelse(test = (horas < hmin_est2),
+              yes = arg_est2_c1 <- pi * ((horas + 10) / (10 + hmin_est2)),
+              no = 0
+); arg_est2_c2 <- ifelse(test = (hmin_est2 <= horas & horas < hmax_est2),
+                  yes = arg_est2_c2 <- pi * ((horas - hmin_est2) / (14 - hmin_est2)),
+                  no = arg_est2_c1
+); arg_est2 <- ifelse(test = (horas > hmax_est2),
+                  yes = arg_est2 <- pi * ((14 - horas) / (10 + hmin_est2)),
+                  no = arg_est2_c2)
 
-arg2 <- ifelse(
-  test = (hmin_est2 <= Hora & Hora < hmax_est2),
-  yes = arg2 <- pi * ((Hora - hmin_est2) / (14 - hmin_est2)),
-  no = NA
-)
-
-arg3 <- ifelse(
-  test = (Hora > hmax_est2),
-  yes = arg3 <- pi * ((14 - Hora) / (10 + hmin_est2)),
-  no = NA
-)
-
-faltante1 <- which(is.na(arg1))
-faltante2 <- which(is.na(arg2))
-faltante3 <- which(is.na(arg3))
-
-(arg_est2 <- c(arg1[-faltante1], arg2[-faltante2], arg3[-faltante3]))
-
-(Tcalc_est2 <- ifelse(
-  test =  (hmin_est2 <= Hora & Hora < hmax_est2),
-  yes = Tcalc_est2 <- Tmed_est2 - A2 * cos(arg_est2),
-  no = Tcalc_est2 <- Tmed_est2 + A2 * cos(arg_est2)
+(tcalc_est2 <- ifelse(test =  (hmin_est2 <= horas & horas < hmax_est2),
+                      yes = tcalc_est2 <- tmed_est2 - A2 * cos(arg_est2),
+                      no = tcalc_est2 <- tmed_est2 + A2 * cos(arg_est2)
 ))
 ```
 
 b.
 ```{r}
-(RMSE1 <- sqrt(mean((Tcalc_est1 - tar_est1)^2)))
-(RMSE2 <- sqrt(mean((Tcalc_est2 - tar_est2)^2)))
+(RMSE1 <- sqrt(mean((tcalc_est1 - tar_est1)^2)))
+(RMSE2 <- sqrt(mean((tcalc_est2 - tar_est2)^2)))
 ```
 
 c.
 ```{r}
-(r1 <- (mean((tar_est1 - mean(tar_est1)) * (Tcalc_est1 - mean(Tcalc_est1)))) / sqrt(mean((tar_est1 - mean(tar_est1)^2) * (Tcalc_est1 - mean(Tcalc_est1)^2))))
+(r1 <- (mean((tar_est1 - mean(tar_est1)) * (tcalc_est1 - mean(tcalc_est1)))) / sqrt(mean((tar_est1 - mean(tar_est1))^2 * (tcalc_est1 - mean(tcalc_est1))^2)))
 
-(r2 <- (mean((tar_est2 - mean(tar_est2)) * (Tcalc_est2 - mean(Tcalc_est2)))) / sqrt(mean((tar_est2 - mean(tar_est2)^2) * (Tcalc_est2 - mean(Tcalc_est2)^2))))
+(r2 <- (mean((tar_est2 - mean(tar_est2)) * (tcalc_est2 - mean(tcalc_est2)))) / sqrt(mean((tar_est2 - mean(tar_est2))^2 * (tcalc_est2 - mean(tcalc_est2))^2)))
 ```
