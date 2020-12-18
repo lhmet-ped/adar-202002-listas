@@ -22,7 +22,7 @@ library(tidyverse)
 ```{r}
 x <- c(seq(from = 3, to = 6, by = 0.1))
 
-(y <- exp(x)*cos(x))
+(y <- exp(x) * cos(x))
 ```
 
 - - - 
@@ -325,14 +325,13 @@ plot(tar_est1,
 )
 points(tar_est2, type = "l", col = 4)
 legend("topleft", 
-  legend = c("tar_est1", "tar_est2"), 
-  col = c(2, 4), 
-  lwd = 2, 
-  bty = "n")
+       legend = c("tar_est1", "tar_est2"), 
+       col = c(2, 4), 
+       lwd = 2, 
+       bty = "n")
 grid(nx = 24)
 box(lwd = 2)
 axis(side = 2, las = 1)
-
 ```
 
 a.
@@ -347,12 +346,12 @@ tmed_est2 <- mean(tar_est2)
 b.
 ```{r}
 if (tmed_est1 - tmed_est2 == 0)
-  {print("tmed_est1 = tmed_est2")}
+{print("tmed_est1 = tmed_est2")}
 
 if(tmed_est1 - tmed_est2 > 0)
-  {print("tmed_est1")} else {
-      print("tmed_est2")
-    }
+{print("tmed_est1")} else {
+  print("tmed_est2")
+}
 ```
 
 c.
@@ -456,14 +455,14 @@ tmed_est1 <- (max(tar_est1) + min(tar_est1)) / 2
 A1 <- (max(tar_est1) - min(tar_est1)) / 2
 
 arg_est1_c1 <- ifelse(test = (horas < hmin_est1),
-              yes = arg_est1_c1 <- pi * ((horas + 10) / (10 + hmin_est1)),
-              no = 0
+                      yes = arg_est1_c1 <- pi * ((horas + 10) / (10 + hmin_est1)),
+                      no = 0
 ); arg_est1_c2 <- ifelse(test = (hmin_est1 <= horas & horas < hmax_est1),
-                  yes = arg_est1_c2 <- pi * ((horas - hmin_est1) / (14 - hmin_est1)),
-                  no = arg_est1_c1
+                         yes = arg_est1_c2 <- pi * ((horas - hmin_est1) / (14 - hmin_est1)),
+                         no = arg_est1_c1
 ); arg_est1 <- ifelse(test = (horas > hmax_est1),
-                  yes = arg_est1 <- pi * ((14 - horas) / (10 + hmin_est1)),
-                  no = arg_est1_c2)
+                      yes = arg_est1 <- pi * ((14 - horas) / (10 + hmin_est1)),
+                      no = arg_est1_c2)
 
 (tcalc_est1 <- ifelse(test =  (hmin_est1 <= horas & horas < hmax_est1),
                       yes = tcalc_est1 <- tmed_est1 - A1 * cos(arg_est1),
@@ -474,14 +473,14 @@ tmed_est2 <- (max(tar_est2) + min(tar_est2)) / 2
 A2 <- (max(tar_est2) - min(tar_est2)) / 2
 
 arg_est2_c1 <- ifelse(test = (horas < hmin_est2),
-              yes = arg_est2_c1 <- pi * ((horas + 10) / (10 + hmin_est2)),
-              no = 0
+                      yes = arg_est2_c1 <- pi * ((horas + 10) / (10 + hmin_est2)),
+                      no = 0
 ); arg_est2_c2 <- ifelse(test = (hmin_est2 <= horas & horas < hmax_est2),
-                  yes = arg_est2_c2 <- pi * ((horas - hmin_est2) / (14 - hmin_est2)),
-                  no = arg_est2_c1
+                         yes = arg_est2_c2 <- pi * ((horas - hmin_est2) / (14 - hmin_est2)),
+                         no = arg_est2_c1
 ); arg_est2 <- ifelse(test = (horas > hmax_est2),
-                  yes = arg_est2 <- pi * ((14 - horas) / (10 + hmin_est2)),
-                  no = arg_est2_c2)
+                      yes = arg_est2 <- pi * ((14 - horas) / (10 + hmin_est2)),
+                      no = arg_est2_c2)
 
 (tcalc_est2 <- ifelse(test =  (hmin_est2 <= horas & horas < hmax_est2),
                       yes = tcalc_est2 <- tmed_est2 - A2 * cos(arg_est2),
